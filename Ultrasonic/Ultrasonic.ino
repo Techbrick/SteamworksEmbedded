@@ -100,6 +100,7 @@ void trigger_hcsr() {
   digitalWrite(hcsr0_trig, LOW);
   digitalWrite(hcsr1_trig, LOW);
   digitalWrite(hcsr2_trig, LOW);
+  digitalWrite(hcsr3_trig, LOW);
   digitalWrite(hcsr4_trig, LOW);
   digitalWrite(hcsr5_trig, LOW);
 
