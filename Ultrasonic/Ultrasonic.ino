@@ -41,43 +41,43 @@ unsigned long duration;
 // Front Left
 unsigned long hcsr0_micros;
 byte hcsr0_state = UNITIALIZED;
-const int hcsr0_trig = 2;
-const int hcsr0_echo = 3;
+const int hcsr0_trig = 27;
+const int hcsr0_echo = 26;
 float hcsr0_distance = 0;
 
 // Front Right
 unsigned long hcsr1_micros;
 byte hcsr1_state = UNITIALIZED;
-const int hcsr1_trig = 4;
-const int hcsr1_echo = 5;
+const int hcsr1_trig = 31;
+const int hcsr1_echo = 30;
 float hcsr1_distance = 0;
 
 // Right Side
 unsigned long hcsr2_micros;
 byte hcsr2_state = UNITIALIZED;
-const int hcsr2_trig = 6;
-const int hcsr2_echo = 7;
+const int hcsr2_trig = 35;
+const int hcsr2_echo = 34;
 float hcsr2_distance = 0;
 
 // Rear Right
 unsigned long hcsr3_micros;
 byte hcsr3_state = UNITIALIZED;
-const int hcsr3_trig = 8;
-const int hcsr3_echo = 9;
+const int hcsr3_trig = 39;
+const int hcsr3_echo = 38;
 float hcsr3_distance = 0;
 
 // Rear Left
 unsigned long hcsr4_micros;
 byte hcsr4_state = UNITIALIZED;
-const int hcsr4_trig = A0;
-const int hcsr4_echo = A1;
+const int hcsr4_trig = 43;
+const int hcsr4_echo = 42;
 float hcsr4_distance = 0;
 
 // Left Side
 unsigned long hcsr5_micros;
 byte hcsr5_state = UNITIALIZED;
-const int hcsr5_trig = A2;
-const int hcsr5_echo = A3;
+const int hcsr5_trig = 47;
+const int hcsr5_echo = 46;
 float hcsr5_distance = 0;
 
 
