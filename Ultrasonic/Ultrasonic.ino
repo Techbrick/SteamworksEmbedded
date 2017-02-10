@@ -2,6 +2,18 @@
 /* Ultrasonic reader
     (C) FRC 3941
     CC-BY-SA
+
+  Returns the following data over I2C:
+  7x4 = 28 Bytes
+  Bytes       Data
+  4           Unsigned Long Ping #
+  4           Float Inches Ultrasonic 0
+  4           Float Inches Ultrasonic 1
+  4           Float Inches Ultrasonic 2
+  4           Float Inches Ultrasonic 3
+  4           Float Inches Ultrasonic 4
+  4           Float Inches Ultrasonic 5
+
 */
 #include <Wire.h>
 
@@ -10,6 +22,10 @@
 #define ECHOING 0x02
 #define SRIDLE 0x04
 #define SRERROR 0x08
+
+const int I2CSlaveAddr = 6;
+
+
 
 const float speedOfSound = 0.00675197; // inches per us / 2 for two way travel
 
@@ -80,8 +96,8 @@ void setup() {
   pinMode(hcsr5_trig, OUTPUT);
   pinMode(hcsr5_echo, INPUT);
 
-  Wire.begin(6);  // This will be the device
-
+  Wire.begin(I2CSlaveAddr);  // This will be the device
+  Wire.onRequest(reportDistancesI2C);
   Serial.begin(115200);
 }
 
@@ -247,5 +263,45 @@ void report_dist_serial() {
   Serial.print(hcsr4_distance);
   Serial.print(",");
   Serial.println(hcsr5_distance);
+}
+
+void reportDistancesI2C(){
+  byte Data[28];
+  volatile byte* ptr_pingnum = (byte*) &pingnumber;
+  volatile byte* ptr_hcsr0_distance = (byte*) &hcsr0_distance;
+  volatile byte* ptr_hcsr1_distance = (byte*) &hcsr1_distance;
+  volatile byte* ptr_hcsr2_distance = (byte*) &hcsr2_distance;
+  volatile byte* ptr_hcsr3_distance = (byte*) &hcsr3_distance;
+  volatile byte* ptr_hcsr4_distance = (byte*) &hcsr4_distance;
+  volatile byte* ptr_hcsr5_distance = (byte*) &hcsr5_distance;
+  Data[0] = ptr_pingnum[0];
+  Data[1] = ptr_pingnum[1];
+  Data[2] = ptr_pingnum[2];
+  Data[3] = ptr_pingnum[4];
+  Data[4] = ptr_hcsr0_distance[0];
+  Data[5] = ptr_hcsr0_distance[1];
+  Data[6] = ptr_hcsr0_distance[2];
+  Data[7] = ptr_hcsr0_distance[3];
+  Data[8] = ptr_hcsr1_distance[0];
+  Data[9] = ptr_hcsr1_distance[1];
+  Data[10] = ptr_hcsr1_distance[2];
+  Data[11] = ptr_hcsr1_distance[3];
+  Data[12] = ptr_hcsr2_distance[0];
+  Data[13] = ptr_hcsr2_distance[1];
+  Data[14] = ptr_hcsr2_distance[2];
+  Data[15] = ptr_hcsr2_distance[3];
+  Data[16] = ptr_hcsr3_distance[0];
+  Data[17] = ptr_hcsr3_distance[1];
+  Data[18] = ptr_hcsr3_distance[2];
+  Data[19] = ptr_hcsr3_distance[3];
+  Data[20] = ptr_hcsr4_distance[0];
+  Data[21] = ptr_hcsr4_distance[1];
+  Data[22] = ptr_hcsr4_distance[2];
+  Data[23] = ptr_hcsr4_distance[3];
+  Data[24] = ptr_hcsr5_distance[0];
+  Data[25] = ptr_hcsr5_distance[1];
+  Data[26] = ptr_hcsr5_distance[2];
+  Data[27] = ptr_hcsr5_distance[3];
+  Wire.write(Data, 28);
 }
 
